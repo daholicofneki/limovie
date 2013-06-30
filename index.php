@@ -4,7 +4,7 @@ require_once ('library/config.php');
 
 
 # Get FILM record
-$data = $DB->get("SELECT kode_imdb, rating_rt, rating_imdb FROM tbl_film WHERE kode_imdb != '' AND cek = 0 ORDER BY grab_time DESC", 'all');
+$data = $DB->get("SELECT kode_imdb, rating_rt, rating_imdb, nama_film FROM tbl_film WHERE kode_imdb != '' AND cek = 0 ORDER BY grab_time DESC", 'all');
 
 
 if($data)
@@ -13,9 +13,9 @@ if($data)
     {
         $imdb_idx =  $item->kode_imdb;
 
-        echo $movie->isSynopsys($imdb_idx);
-        exit;
-# http://www.imdb.com/title/tt1480656/synopsis?ref_=tt_stry_pl
+        var_dump($imdb_idx, $item->nama_film, $movie->isSynopsys($imdb_idx));
+        echo "<br />";
+
     }
 }
 
