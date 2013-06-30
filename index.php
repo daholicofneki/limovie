@@ -13,8 +13,10 @@ if($data)
     {
         $imdb_idx =  $item->kode_imdb;
 
-        var_dump($imdb_idx, $item->nama_film, $movie->isSynopsys($imdb_idx));
-        echo "<br />";
+        if($movie->isSynopsys($imdb_idx)) 
+        {
+            var_dump($movie->getSynopsis($imdb_idx)); exit;
+        }
 
     }
 }

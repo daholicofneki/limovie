@@ -6,6 +6,7 @@
 class Movie {
 
     private $content;
+    private $text = '';
 
 
     /**
@@ -45,8 +46,7 @@ class Movie {
      */
     public function isSynopsys($id) {
 
-        $is_synopsis = false;
-        $string = '';
+        $is_synopsys = false;
         $url = 'http://www.imdb.com/title/'. $id .'/synopsis';
 
         // Retrieve 
@@ -56,11 +56,25 @@ class Movie {
 
         if ($start = $this->getPosition($this->content, $scopeStart)) {
             if ($end = $this->getPosition($this->content, $scopeEnd, $start)) {
-                $string = substr($this->content, $start, ($end - $start));
-                $is_synopsis = strpos($string, 'Add a Synopsis');
+                $this->text = substr($this->content, $start, ($end - $start));
+                $is_synopsys = strpos($this->text, 'Add a Synopsis');
             }
         }
-        return !$is_synopsis;
+
+        return !$is_synopsys;
+    }
+
+
+    /**
+     * Get synopsis content
+     */
+    public function getSynopsis($id) {
+        $this->isSynopsys($id);
+
+        $string = new Translate();
+        $this->text = $string->convert($this->text);
+
+        return $this->text;
     }
 
 

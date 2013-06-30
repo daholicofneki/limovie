@@ -4,7 +4,7 @@
  * http://rupeshpatel.wordpress.com/2012/06/23/usage-of-google-translator-api-for-free/
  */
 
-class Translate {
+class Translate extends Movie {
 
     function convert($word, $lang_from = 'en', $lang_to =' in')
     {
