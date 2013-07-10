@@ -11,6 +11,7 @@ class Movie {
 
     /**
      * Set content from imdb
+     * Inisialisasi html mentah dari imdb
      */
     private function setContent($url)
     {
@@ -43,19 +44,24 @@ class Movie {
 
     /**
      * To knowing does the movie already has synopsis or not
+     * Return value : boolean
      */
     public function isSynopsys($id) {
 
         $is_synopsys = false;
         $url = 'http://www.imdb.com/title/'. $id .'/synopsis';
 
-        // Retrieve 
+        // Call curl by given url 
         $this->setContent($url);
+
+
         $scopeStart = '<div id="swiki_body">';
         $scopeEnd = '<div class="display" style="margin-top: 8px">';
 
         if ($start = $this->getPosition($this->content, $scopeStart)) {
             if ($end = $this->getPosition($this->content, $scopeEnd, $start)) {
+                // set attribute text untuk menampung string sinopsis
+                // <div idddasdas>
                 $this->text = substr($this->content, $start, ($end - $start));
                 $is_synopsys = strpos($this->text, 'Add a Synopsis');
             }
@@ -69,12 +75,20 @@ class Movie {
      * Get synopsis content
      */
     public function getSynopsis($id) {
-        $this->isSynopsys($id);
+        
+        // bersihkan html tag element
+        $newStr = $this->clean($this->text);
+        // bersihkan space kosong antara awal dan akhir
+        $newStr = trim($newStr);
+        
+        //$this->text = htmlentities($this->text);
 
         $string = new Translate();
-        $this->text = $string->convert($this->text);
+        // menghasilkan sebuah string daru
+        $newStr = $string->convert($newStr);
 
-        return $this->text;
+        return $newStr;
+
     }
 
 

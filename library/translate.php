@@ -6,9 +6,10 @@
 
 class Translate extends Movie {
 
-    function convert($word, $lang_from = 'en', $lang_to =' in')
+    function convert($word, $lang_from = 'en', $lang_to ='in')
     {
         $text = '';
+        $word = $this->clean($word);
         $word = explode('. ', $word);
 
         for($i = 0; $i < count($word); $i++)
@@ -18,7 +19,7 @@ class Translate extends Movie {
         return $text;
     }
 
-    private function convert_word($word, $lang_from = 'en', $lang_to =' in') 
+    private function convert_word($word, $lang_from = 'en', $lang_to ='in') 
     {
         $word = urlencode($word) .'.';
         $url = 'http://translate.google.com/translate_a/t?client=t&text='. $word .'&hl='.$lang_from.'&sl='.$lang_from.'&tl='.$lang_to.'&ie=UTF-8&oe=UTF-8&multires=1&otf=1&ssel=3&tsel=3&sc=1';
