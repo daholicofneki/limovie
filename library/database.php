@@ -5,10 +5,10 @@
 
 class Database {
 
-    private $host           = 'localhost';
-    private $username       = 'root';
-    private $password       = '';
-    private $db             = 'wordpress';
+    private $host;
+    private $username;
+    private $password;
+    private $db;
     private $connection;
     private $arr            = array ();
 
@@ -18,8 +18,13 @@ class Database {
      * @access      public
      * @return      void
      */
-    public function __construct ()
+    public function __construct (Array $config = array() )
     {
+        $this->host       = $config['host'];
+        $this->username   = $config['username'];
+        $this->password   = $config['password'];
+        $this->db         = $config['database'];
+        
         $this->connection = @mysql_pconnect ($this->host, $this->username, $this->password);
         
         try
@@ -103,5 +108,19 @@ class Database {
     }
 }
 
+$DB1 = new Database (array(
+    'host'          => 'localhost',
+    'username'      => 'root',
+    'password'      => '',
+    'database'      => 'wordpress'
+));
+
+
+$DB2 = new Database (array(
+    'host'          => 'localhost',
+    'username'      => 'root',
+    'password'      => '',
+    'database'      => 'wordpress2'
+));
+
 /*  End class Database  */
-$DB = new Database ();
